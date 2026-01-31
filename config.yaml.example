@@ -1,0 +1,40 @@
+# 数据库
+database:
+  host: "localhost"
+  port: 5432
+  name: "competitor_intel"
+  user: "postgres"
+  password: "postgres"
+
+# 对象存储
+storage:
+  type: "local"
+  base_path: "./data"
+
+# LLM 配置
+llm:
+  provider: "openai"
+  model: "gpt-4o"
+  api_key: ""  # 请设置环境变量 OPENAI_API_KEY
+  temperature: 0.3
+  max_tokens: 2000
+
+# 抓取配置
+scraping:
+  timeout: 30
+  retry_times: 3
+  retry_delay: 5
+  user_agent: "CompetitorIntel/1.0"
+  respect_robots_txt: true
+  headless_timeout: 60
+
+# 调度配置
+scheduler:
+  timezone: "Asia/Shanghai"
+  default_schedule: "0 8 * * *"
+
+# 通知配置
+notification:
+  email_smtp_host: "smtp.example.com"
+  email_smtp_port: 587
+  webhook_url: ""
