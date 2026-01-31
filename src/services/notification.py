@@ -9,8 +9,8 @@ from typing import Optional, List, Dict, Any
 
 import requests
 
-from .models.database import Subscription, ChangeEvent, Insight
-from .config import settings
+from src.models.database import Subscription, ChangeEvent, Insight
+from src.config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -142,7 +142,7 @@ class WeeklyDigestGenerator:
         """
         from sqlalchemy import func
         from datetime import timedelta
-        from .models.database import Competitor, ChangeEvent
+        from src.models.database import Competitor, ChangeEvent
         
         # 计算本周时间范围
         now = datetime.utcnow()
@@ -208,7 +208,7 @@ def send_change_notifications(
         change_event_id: 变更事件 ID
         notify_type: 通知类型（realtime/weekly）
     """
-    from .models.database import Subscription, ChangeEvent, Insight
+    from src.models.database import Subscription, ChangeEvent, Insight
     
     change_event = db.query(ChangeEvent).filter(
         ChangeEvent.id == change_event_id

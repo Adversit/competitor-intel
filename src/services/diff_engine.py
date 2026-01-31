@@ -9,7 +9,7 @@ from dataclasses import dataclass, field
 from difflib import SequenceMatcher
 from typing import List, Optional, Tuple
 
-from .config import settings
+from src.config import settings
 
 logger = logging.getLogger(__name__)
 

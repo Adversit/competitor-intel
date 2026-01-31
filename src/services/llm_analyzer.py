@@ -7,7 +7,7 @@ import logging
 from dataclasses import dataclass
 from typing import List, Optional, Dict, Any
 
-from .config import settings
+from src.config import settings
 
 logger = logging.getLogger(__name__)
 

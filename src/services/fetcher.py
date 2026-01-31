@@ -13,9 +13,9 @@ from bs4 import BeautifulSoup
 from readability import Document
 from sqlalchemy.orm import Session
 
-from .models.database import Snapshot, Source
-from .config import settings
-from .utils.storage import ensure_dir
+from src.models.database import Snapshot, Source
+from src.config import settings
+from src.utils.storage import ensure_dir
 
 logger = logging.getLogger(__name__)
 

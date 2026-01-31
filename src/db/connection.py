@@ -4,7 +4,7 @@
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
-from .database import Base
+from src.models.database import Base
 
 # 引擎创建（延迟导入以避免循环引用）
 _engine = None

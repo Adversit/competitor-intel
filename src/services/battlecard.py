@@ -10,9 +10,9 @@ from typing import Optional, List, Dict, Any
 from sqlalchemy.orm import Session
 from sqlalchemy import desc
 
-from .models.database import Competitor, Battlecard, ChangeEvent, Insight
-from .services.fetcher import Fetcher, PriceExtractor
-from .services.llm_analyzer import LLMAnalyzer
+from src.models.database import Competitor, Battlecard, ChangeEvent, Insight
+from src.services.fetcher import Fetcher, PriceExtractor
+from src.services.llm_analyzer import LLMAnalyzer
 
 logger = logging.getLogger(__name__)
 

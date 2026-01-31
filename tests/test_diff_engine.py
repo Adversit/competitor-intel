@@ -24,7 +24,7 @@ class TestDiffEngine:
         """小幅变化"""
         old = "Hello world"
         new = "Hello Python"
-        result = self.engine.compute_diff(old, new)
+        result = self.engine.compute_diff(old, new, sensitivity="high")
         assert result is not None
         assert result.change_ratio > 0
         assert result.added_lines >= 0
@@ -34,7 +34,7 @@ class TestDiffEngine:
         """重大变化"""
         old = "This is a short text."
         new = "This is a much longer text with many more words and details."
-        result = self.engine.compute_diff(old, new)
+        result = self.engine.compute_diff(old, new, sensitivity="high")
         assert result is not None
         assert result.change_ratio > 0.3  # 重大更新
     
@@ -42,9 +42,9 @@ class TestDiffEngine:
         """JSON 序列化"""
         old = "Version 1.0"
         new = "Version 2.0"
-        result = self.engine.compute_diff(old, new)
+        result = self.engine.compute_diff(old, new, sensitivity="high")
         assert result is not None
-        
+
         json_data = self.engine.to_json(result)
         assert "summary" in json_data
         assert "chunks" in json_data

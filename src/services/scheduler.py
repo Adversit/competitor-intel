@@ -9,10 +9,10 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from sqlalchemy.orm import Session
 
-from .models.database import Source, Snapshot
-from .services.fetcher import Fetcher
-from .services.diff_engine import DiffEngine
-from .services.llm_analyzer import analyze_change_event
+from src.models.database import Source, Snapshot
+from src.services.fetcher import Fetcher
+from src.services.diff_engine import DiffEngine
+from src.services.llm_analyzer import analyze_change_event
 
 logger = logging.getLogger(__name__)
 
@@ -136,7 +136,7 @@ class MonitorScheduler:
             return
         
         # 保存变更事件
-        from .models.database import ChangeEvent
+        from src.models.database import ChangeEvent
         
         change_event = ChangeEvent(
             source_id=source.id,
@@ -170,7 +170,7 @@ class MonitorScheduler:
                 source_type=source.source_type
             )
             
-            from .models.database import Insight
+            from src.models.database import Insight
             insight = Insight(
                 change_event_id=change_event.id,
                 change_type=result.change_type,

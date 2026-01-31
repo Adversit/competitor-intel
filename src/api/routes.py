@@ -10,15 +10,15 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from sqlalchemy import desc
 
-from .connection import get_db
-from .models.database import (
-    Competitor, Source, ChangeEvent, Insight, 
+from src.db.connection import get_db
+from src.models.database import (
+    Competitor, Source, ChangeEvent, Insight,
     Battlecard, Subscription, Feedback
 )
-from .services.battlecard import BattlecardGenerator
-from .services.notification import NotificationService, send_change_notifications
-from .services.fetcher import fetch_source
-from .services.scheduler import get_scheduler
+from src.services.battlecard import BattlecardGenerator
+from src.services.notification import NotificationService, send_change_notifications
+from src.services.fetcher import fetch_source
+from src.services.scheduler import get_scheduler
 
 router = APIRouter()
 
@@ -298,7 +298,7 @@ def get_weekly_digest(
     db: Session = Depends(get_db)
 ):
     """获取周报"""
-    from .services.notification import WeeklyDigestGenerator
+    from src.services.notification import WeeklyDigestGenerator
     
     generator = WeeklyDigestGenerator()
     report = generator.generate(db, competitor_ids, category)
