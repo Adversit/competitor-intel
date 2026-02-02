@@ -303,3 +303,52 @@ def get_weekly_digest(
     generator = WeeklyDigestGenerator()
     report = generator.generate(db, competitor_ids, category)
     return {"report": report}
+
+# ============== 系统设置 ==============
+
+@router.get("/settings/llm")
+def get_llm_settings(db: Session = Depends(get_db)):
+    """获取 LLM 设置"""
+    from src.config import settings
+    
+    # 遮蔽 API Key
+    masked_key = ""
+    if settings.llm.api_key:
+        masked_key = settings.llm.api_key[:3] + "****" + settings.llm.api_key[-4:]
+    
+    return {
+        "provider": settings.llm.provider,
+        "model": settings.llm.model,
+        "api_key_masked": masked_key,
+        "is_configured": bool(settings.llm.api_key),
+        "api_base_url": settings.llm.api_base_url,
+        "temperature": settings.llm.temperature
+    }
+
+
+@router.post("/settings/llm")
+def update_llm_settings(
+    provider: str,
+    model: str,
+    api_key: Optional[str] = None,
+    api_base_url: Optional[str] = None,
+    temperature: float = 0.3,
+    db: Session = Depends(get_db)
+):
+    """更新 LLM 设置"""
+    from src.config import settings, save_config
+    
+    settings.llm.provider = provider
+    settings.llm.model = model
+    
+    # 只有当提供了新的 api_key 时才更新
+    if api_key and "****" not in api_key:
+        settings.llm.api_key = api_key
+    
+    settings.llm.api_base_url = api_base_url
+    settings.llm.temperature = temperature
+    
+    # 保存到文�?
+    save_config(settings)
+    
+    return {"status": "updated"}

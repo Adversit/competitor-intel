@@ -157,12 +157,17 @@ class LLMAnalyzer:
             return self._mock_response()
         
         import openai
-        client = openai.OpenAI(api_key=self.api_key)
+        client = openai.OpenAI(
+            api_key=self.api_key,
+            base_url=getattr(settings.llm, "api_base_url", None)
+        )
         
+        # 为了更好的兼容性（特别是 Qwen），也可以在 prompt 中强调 JSON，而不强制依赖 response_format
         response = client.chat.completions.create(
             model=self.model,
             messages=[{"role": "user", "content": prompt}],
             temperature=self.temperature,
+            # Qwen-max 等支持 json_object，但为了通用，如果遇到报错可以去掉这行
             response_format={"type": "json_object"}
         )
         

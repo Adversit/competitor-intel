@@ -38,6 +38,7 @@ class LLMConfig(BaseModel):
     provider: str = "openai"
     model: str = "gpt-4o"
     api_key: str = ""
+    api_base_url: Optional[str] = None
     temperature: float = 0.3
     max_tokens: int = 2000
 
@@ -93,3 +94,17 @@ def load_config(config_path: Optional[str] = None) -> Settings:
 # CLI 配置加载
 if os.environ.get("CONFIG_PATH"):
     settings = load_config()
+
+
+def save_config(config: Settings, config_path: Optional[str] = None):
+    """保存配置到 YAML 文件"""
+    import yaml
+    
+    if config_path is None:
+        config_path = os.environ.get("CONFIG_PATH", "config.yaml")
+    
+    # 转换为 dict，排除一些不需要保存的动态字段（如果需要）
+    data = config.model_dump()
+    
+    with open(config_path, "w", encoding="utf-8") as f:
+        yaml.dump(data, f, default_flow_style=False, allow_unicode=True)
